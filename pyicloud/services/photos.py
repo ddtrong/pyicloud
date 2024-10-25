@@ -531,10 +531,12 @@ class PhotoAsset:
         u"public.heic": u"image",
         u"public.jpeg": u"image",
         u"public.png": u"image",
+        u"com.compuserve.gif": u"image",
         u"com.apple.quicktime-movie": u"movie",
         u"public.mpeg-4": u"movie",
         u"com.apple.m4v-video": u"movie",
         u"com.microsoft.bmp": u"image",
+        u"com.adobe.raw-image": u"image",
         u"public.3gpp": u"movie",
         u"public.avi": u"movie",
         u"public.mpeg": u"movie"
@@ -578,6 +580,14 @@ class PhotoAsset:
     def filename(self):
         fields = self._master_record['fields']
         if 'filenameEnc' in fields and 'value' in fields['filenameEnc']:
+            if fields['filenameEnc']['value'].find(".png") > -1:
+                return fields['filenameEnc']['value']
+            if fields['filenameEnc']['value'].find(".dng") > -1:
+                return fields['filenameEnc']['value']
+            if fields['filenameEnc']['value'].find(".mp4") > -1:
+                return fields['filenameEnc']['value']
+            if fields['filenameEnc']['value'].find(".gif") > -1:
+                return fields['filenameEnc']['value']
             return base64.b64decode(
                 fields['filenameEnc']['value']
             ).decode('utf-8')
